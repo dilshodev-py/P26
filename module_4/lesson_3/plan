@@ -1,0 +1,22 @@
+
+
+
+Foreign Key : 1T1 , 1TM , MTM :
+            on delete [CASCADE , SET NULL , RESTRICT , NO ACTION , SET DEFAULT]
+DATA TYPE
+COLUMN ALIES
+TABLE ALIES
+LIMIT   :    offset 10*(page_num-1) limit 10
+FETCH
+IN
+BETWEEN
+LIKE
+ILIKE
+IS NULL
+
+
+pg_restore
+IMPORT CSV
+EXPORT CSV
+
+

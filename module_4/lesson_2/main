@@ -1,0 +1,56 @@
+DDL:
+    truncate table table_name
+    create table if not exists table_name (
+        field1_name type constraint
+        field1_name type constraint
+        field1_name type constraint
+        field1_name type constraint
+        field1_name type constraint
+        field1_name type constraint
+    )
+    alter table table_name action
+    drop table table_name ;
+
+DML:
+    select
+    insert
+    update
+    delete
+
+
+
+-- insert
+-- select
+-- update
+-- delete
+
+-- INSERT INTO table1(column1, column2, …)
+-- VALUES (value1, value2, …);
+
+-- insert into categories(id,name)
+-- values ('Telefon') returning id;
+--
+--
+--
+-- select count(distinct name) from categories;
+
+-- Taqqoslash Operators
+-- >
+-- <
+-- <=
+-- >=
+-- <>
+-- !=
+
+
+-- update categories set name = 'Botirjon' where condition  returning name , id;
+--
+-- select * from categories where id = 2;
+--
+-- delete from categories where id <> 1 returning name;
+--
+--
+-- alter sequence categories_id_seq restart ;
+
+
+

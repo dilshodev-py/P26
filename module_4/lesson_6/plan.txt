@@ -1,0 +1,76 @@
+
+
+
+projects(500 ta)
+
+id
+name
+description
+start_date
+end_date
+status        "in_progress", "completed", "on_hold"
+user_id
+created_at
+updated_at
+
+
+
+users(250)
+
+id
+username
+email
+password
+full_name
+role	        "admin", "manager", "employee", "user"
+created_at
+updated_at
+
+
+
+0) lesson_6
+1) Table yaraish (users , projects)
+
+2) mackkaro saitdan fake malumot yaratamiz
+va databaseda yaratilgan table larga joylimiz
+
+3) rolei "manager" bo'lgan userlarni projectlarini nomlari chiqarilsin !
+join orqali bajarilsin
+
+4) user.role = employee -> projectlari o'chirib yuborilsin !
+Va o'chirib yuborilgan malumotlar csv file ga saqlansin
+
+
+5) users jadvalidagi email ustuni null bo'lgan userlarni malumotlari chiqarilsin
+->  user_name | "project_name1 , project_name2 , project_name3"
+
+
+6) {ism}{familya}.tar nomli file ga backup olamiz
+
+7) Guruhga bo'linamiz : 3 ta guruh
+    1 -guruh :
+        Madina
+        Solekh
+        Abduvoris
+
+    2 - guruh :
+        MuhammadAmin
+        Hojakbar
+        Elmurod
+
+    3 - guruh:
+        Rustambek
+        Musavvir
+        Davron
+
+8) E-english ni Database Schemasini qurish
+
+
+
+
+
+
+
+
+
+

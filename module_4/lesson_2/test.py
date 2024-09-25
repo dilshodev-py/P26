@@ -1,0 +1,1 @@
+print(dict((k, v) for k, v in {1: 1, 2: 2}.items() if k == 2))

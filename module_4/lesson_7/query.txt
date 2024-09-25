@@ -1,0 +1,123 @@
+-- create function function_name(param1 type, param2 type)
+--     returns varchar
+--     language plpgsql
+-- as
+-- $$
+-- declare
+--     var type;
+--     var type;
+-- begin
+--     -- logic;
+-- end;
+-- $$;
+
+-- fullname(Dilshod , Absaitov)
+
+-- create function add(num1 integer , num2 integer)
+-- returns integer
+-- language plpgsql
+-- as
+--     $$
+--         declare
+--             result integer;
+--         begin
+--             result = num1 + num2;
+--             return result;
+--         end;
+--     $$;
+--
+-- select add(10, 20) nimadir;
+
+-- do
+-- $$
+--     begin
+--         for i in 1..10
+--             loop
+--                 case
+--                     when i % 2 = 0 then Raise Notice '%',i;
+--                 else
+--                     null ;
+--                 end case ;
+--             end loop;
+--     end;
+-- $$
+
+create table users(
+    id serial primary key ,
+    name varchar,
+    age smallint
+);
+
+-- create function by_id_get_user(id_ integer)
+-- returns table(first_name varchar)
+-- language plpgsql
+-- as
+--     $$
+--         begin
+--             return query select name from users u where u.id = id_;
+--         end;
+--     $$;
+-- drop function by_id_get_user(id_ integer);
+
+-- create function by_id_get_user(id_ integer)
+-- returns setof users
+-- language plpgsql
+-- as
+--     $$
+--         begin
+--             return query select * from users u where u.id = id_;
+--         end;
+--     $$;
+-- drop function by_id_get_user(id_ integer);
+--
+-- select * from by_id_get_user(2);
+
+
+-- pagination_user(3)
+CREATE TYPE user_role
+AS
+ENUM('user', 'operator', 'curer' , 'admin');
+
+create table users(
+    id serial primary key ,
+    role user_role
+);
+
+CREATE TYPE order_status
+AS
+ENUM('new', 'archive', 'ready_to_start','delivering' , 'delivered', 'did_not_pick_up_phone', 'cancel','completed');
+
+drop type order_status;
+
+
+create table orders(
+    id serial primary key ,
+    status order_status
+)
+
+
+-- products_by_category_id(category_id) -> product_image |  name |  category_name | product_price | quantity | payment_price  | discount
+-- orders_by_user_id(user_id) -> product_name | product_price | count
+-- favourites_by_user_id(user_id) -> product_image |  name |  category_name | product_price
+-- streams_by_user_id(user_id) -> stream_id  |   stream_name
+-- statistic_stream(user_id)
+-- konkurs_top  -> view(user_name |  order_count(completed))
+-- withdraws(user_id) -> float
+-- worker_filter(region_id , orders_status , category_id ) -> order_id | product_name  | product_quantity  |   order_join_at   |   order_status   |   order_first_name    |    order_phone_nuber   |   order_stream_id   |    pay_amount
+
+
+interval , timestamp , date , time zone
+
+
+
+
+
+
+
+
+
+
+
+
+
+

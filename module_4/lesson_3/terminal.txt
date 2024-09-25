@@ -1,0 +1,11 @@
+unzip zip_file
+cd path
+rm -rf file/directory
+rm -rf file/directory
+sudo chown "$postgres:postgres" .
+sudo -u postgres pg_restore -U postgres -d dvdrenatl < tar_file_name
+sudo -i -u postgres psql -h 10.10.5.235 -p 5432 -U postgres -W
+
+
+
+ifconfig -> ip address

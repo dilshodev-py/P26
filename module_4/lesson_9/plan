@@ -1,0 +1,7 @@
+trigger:
+    insert
+    delete
+    update
+    truncate
+
+

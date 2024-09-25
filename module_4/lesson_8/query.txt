@@ -1,0 +1,152 @@
+-- create type payment_status
+-- as ENUM('Review'  , 'Completed' , 'Cancel');
+--
+--
+-- create table history_payment(
+--     id serial primary key ,
+--     user_id int references users(id),
+--     payment_amount float,
+--     status payment_status,
+--     payment_at timestamp default current_timestamp
+-- );
+
+-- alter table history_payment add column card_number varchar(16);
+
+
+create function withdraws(input_user_id int)
+    returns table
+            (
+                all_payment_amount decimal
+            )
+    language plpgsql
+as
+$$
+begin
+    return query select sum(hp.payment_amount)::decimal
+                 from users u
+                          join history_payment hp on u.id = hp.user_id
+                 where status = 'Completed'
+                   and u.id = input_user_id;
+end;
+$$;
+
+drop function withdraws(input_user_id int);
+
+select *
+from withdraws(2);
+
+
+
+create function worker_filter(input_region_id int = null, input_orders_status order_status = 'new', input_category_id int=null)
+    returns table
+            (
+                order_id          integer,
+                product_name      varchar,
+                product_quantity  smallint,
+                order_join_at     timestamp,
+                order_status      order_status,
+                order_first_name  varchar,
+                order_phone_nuber varchar,
+                order_stream_id   int,
+                pay_amount        decimal
+            )
+    language plpgsql
+as
+$$
+begin
+    return query select o.id::integer,
+                        p.name,
+                        p.quantity::smallint,
+                        o.join_at::timestamp,
+                        o.status::order_status,
+                        o.customer_name,
+                        o.phone_number,
+                        o.stream_id,
+                        p.price::decimal
+                 from orders o
+                          join products p on p.id = o.product_id
+                          join categories c on c.id = p.category_id
+                          left join streams s on p.id = s.product_id
+                          join users u on o.user_id = u.id
+                          join districts d on d.id = u.district_id
+                          join regions r on d.region_id = r.id
+                 where case when input_region_id is null then TRUE else r.id = input_region_id end and
+                                  case when input_orders_status is null then TRUE else o.status = input_orders_status end and
+                                  case when input_category_id is null then TRUE else c.id = input_category_id end;
+end;
+$$;
+
+drop function worker_filter(input_region_id int, input_orders_status order_status, input_category_id int);
+
+
+
+select * from worker_filter(1 , 'new');
+
+
+
+
+
+
+-- select o.id::integer,
+--                         p.name,
+--                         p.quantity::smallint,
+--                         o.join_at::timestamp,
+--                         o.status::order_status,
+--                         o.customer_name,
+--                         o.phone_number,
+--                         o.stream_id,
+--                         p.price::decimal
+--                  from orders o
+--                           join products p on p.id = o.product_id
+--                           join categories c on c.id = p.category_id
+--                           left join streams s on p.id = s.product_id
+--                           join users u on o.user_id = u.id
+--                           join districts d on d.id = u.district_id
+--                           join regions r on d.region_id = r.id
+--                             where case when input_region_id is null then TRUE else r.id = input_region_id end and
+--                                   case when input_orders_status is null then TRUE else o.status = input_orders_status end and
+--                                   case when input_category_id is null then TRUE else c.id = input_category_id end;
+
+
+
+-- set time zone 'UTC';
+-- select current_timestamp;
+--
+-- select now() + interval '5 y';
+-- select now() + interval '5 h';
+
+
+-- select format('%s day' % 1);
+-- select extract(day from '2019-02-17 20:20:20'::timestamp);
+
+
+-- select '2025-08-12'::date - extract(day from '2019-02-17 20:20:20'::timestamp)::int*interval '1 day'
+
+-- sudo -u postgres psql -U postgres -d postgres < data.sql
+
+
+
+
+
+========================================================
+
+alter table employees drop constraint employees_department_id_fkey;
+alter table employees add constraint employees_department_id_fkey foreign key (department_id) references departments(id) on delete cascade ;
+
+
+alter table salaries drop constraint salaries_employee_id_fkey;
+alter table salaries add constraint salaries_employee_id_fkey foreign key (employee_id) references employees(id) on delete cascade ;
+
+
+delete from departments d where d.id not in (select min(id) from departments group by name)
+
+
+
+-- avg() > 500000
+
+;
+select d.name , avg(s.salary) from departments d
+join public.employees e on d.id = e.department_id
+join public.salaries s on e.id = s.employee_id
+group by d.id , d.name
+having avg(s.salary) > 50000*1000;

@@ -1,0 +1,122 @@
+
+
+-- CREATE TABLE basket_a (
+--     a serial PRIMARY KEY,
+--     fruit_a VARCHAR (100) NOT NULL
+-- );
+--
+-- CREATE TABLE basket_b (
+--     b serial PRIMARY KEY,
+--     fruit_b VARCHAR (100) NOT NULL
+-- );
+--
+-- INSERT INTO basket_a (fruit_a)
+-- VALUES
+--     ('Apple'),
+--     ('Orange'),
+--     ('Banana'),
+--     ('Cucumber');
+--
+-- INSERT INTO basket_b (fruit_b)
+-- VALUES
+--     ('Orange'),
+--     ('Apple'),
+--     ('Watermelon'),
+--     ('Pear');
+--
+--
+--
+-- select  * from basket_a;
+-- select  * from basket_b;
+--
+-- SELECT
+--     a,
+--     fruit_a,
+--     b,
+--     fruit_b
+-- FROM
+--     basket_a
+-- RIGHT JOIN basket_b
+--     ON fruit_a = fruit_b;
+
+
+
+
+create table categories (
+	id INT primary key ,
+	name VARCHAR(50)
+);
+
+create table products (
+    id serial primary key ,
+	name VARCHAR(50),
+	price DECIMAL(5,2),
+	description VARCHAR(50),
+	created_at timestamp default current_timestamp,
+	category_id INT references categories(id)
+);
+
+
+
+-- select count(*) from products;
+
+select c.name , string_agg(p.name , '|') product_count from categories c
+    join products p on c.id = p.category_id
+                              group by c.name order by product_count desc ;
+
+
+-- select count(*) from categories where name = 'Painting & Vinyl Wall Covering'
+
+
+-- categories.name |  film_count
+
+
+
+================================================================================================
+
+
+select c.name, count(fc.film_id) film_count
+from category c
+         join film_category fc on c.category_id = fc.category_id
+group by c.category_id
+order by c.category_id;
+
+
+
+-- select first_name || ' ' || last_name fullname from customer;
+
+
+-- select concat(c.first_name , ' ' ,  c.last_name) fullname , sum(p.amount) pay_amount from customer c
+--     join payment p on c.customer_id = p.customer_id
+-- group by c.customer_id order by pay_amount desc ;
+
+
+-- category.name     |    f.title
+
+-- customer.fullname |  p.all_pay_amount
+
+
+-- film.title
+-- film.title
+-- film.title
+-- film.title
+-- film.title
+
+
+select f.title
+from film f
+         join inventory i on f.film_id = i.film_id
+         join rental r on i.inventory_id = r.inventory_id
+group by f.film_id
+order by count(r.rental_id) desc, f.film_id desc
+limit 5;
+
+
+
+select c.country from country c
+         join city c2 on c.country_id = c2.country_id
+         join address a on c2.city_id = a.city_id
+         join customer c3 on a.address_id = c3.address_id
+group by c.country_id order by count(c3.customer_id) desc limit 1;
+
+

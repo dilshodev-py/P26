@@ -1,0 +1,17 @@
+
+terminal:
+    1 haftada 1 marta : sudo apt-get update && sudo apt-get upgrade
+
+
+    set password -> linux:
+        sudo -i -u postgres psql
+
+            alter user postgres with password 'new_pass';
+            \q
+
+--------------- DDL --------------------
+create
+alter
+drop
+truncate
+
